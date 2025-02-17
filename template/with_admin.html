@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
+  <style>
+    .jumbotron{
+      float:right;
+    padding-right: 80px;
+    width:700px;
+  }
+  .t{
+    color: black;
+    background-color: white;
+    height: 35px;
+    width:200px;
+    padding-left: 30px;
+    margin-top: 10px;
+    
+  }
+    
+  </style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
+  <div class="b">OBS</div>
+  <div class="jumbotron">
+<div class="d" >
+  <form method="get" action="{% url 'with_admin' %}">
+    <label>Account Number:</label><br>
+    <input type="text"  value="{{query}}" name="query">
+  <br><br>
+  <label>Name</label><br>
+  <input type="text" placeholder="{{x.First_name}}{{x.Middle_name}}{{x.Last_name}}"><br><br>
+  <label>Balance</label><br>
+  <input type="text" placeholder="{{x.Current_balance}}"><br><br>
+  <label>Withdraw amount</label><br>
+  <input type="number" placeholder="enter withdraw amount" name="query_1" value="{{query_1}}"><br><br>
+<button>submit</button>
+</form>
+</div>
+</div>
+  <div class="c">
+    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dash' %}" ><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-user" href="{% url 'account'%}">Account Management</a><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<div class="glyphicon glyphicon-th-list" style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px">Transaction</div><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{%url 'tran_admin' %}" >1.Transactions</a><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dep_admin' %}">2.Deposit</a><br>
+    <div class="t">3.Withdraw</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{%url 'tran_from_admin' %}">4.Transfer</a><br><br>
+    &nbsp;&nbsp; &nbsp;&nbsp;<a class="glyphicon glyphicon-phone-alt" href="{% url 'announcement' %}">Annocements</a><br><br>
+    &nbsp;&nbsp;Manitenance<br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-cog">Settings</a>
+  </div>
+  
+</div>
+
+</body>
+</html>

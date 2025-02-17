@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="{% static 'javascript/login.js'%}"></script>
+  <style>
+
+    .out{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height:100%;
+        width: 100%;
+        position:absolute;
+        top:0%;
+        left:0%;
+        background-color:rgba(0,0,0,0.5);
+    }
+    .in{
+            background-color:white ;
+            height:300px ;
+            padding:80px 50px;
+            margin:10%;
+            border-radius:9px;
+            text-align: center;
+    }
+   
+</style>
+
+
+</head>
+<body>
+<div class="container">
+  <div class="out">
+     <div class="in">
+                <form> 
+                    <input type="text" placeholder="Username" class="btn " id="u"><i class="glyphicon glyphicon-user"></i>
+                     <span id="nu"></span><br><br>
+                    <input type="password" placeholder="Password" class="btn" id="p"><i class="glyphicon glyphicon-lock"></i>
+                    <span id="np"></span><br><br>
+                   <input type="submit"  value="Sign in" onclick="login()">
+                   </form>
+     </div>
+ </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
+  <style>
+    .d{
+      float:right;
+   width: 744px;
+  }
+    .e{
+      height: 130px;
+      width: 200px;
+      background-color: rgb(241, 240, 239);
+      margin-right: 60px;
+      float:right;
+      color: black;
+      text-align: center;
+      padding-top: 30px;
+      margin-right:150px;
+    }
+  </style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
+  <div class="b">OBS</div>
+<div class="d">
+                            <table class="table table-bordered table-hover tabe-striped">
+                               <tr><th>#</th><th>Date Created</th><th>Transactions</th><th>amount</th></tr>
+                               {%for i in x %}<tr><td>{{i.Account_number}}</td><td>{{i.Created_at}}</td><td>beginning balance</td><td>{{i.Current_balance}}</td></tr>
+                              {% endfor %}
+                      
+                              <tr>
+                                <td>{{y.Account_number}}</td>
+                                <td>{{y.Dep_date}}</td>
+                                <td>deposit to </td>
+                                <td>{{y.Deposit_amount}}</td>
+                              </tr>
+                              <tr>
+                              <td>{{y.Account_number}}</td>
+                              <td>{{y.With_date}}</td>
+                              <td>Withdraw</td>
+                              <td>{{y.Withdraw_amount}}</td>
+                              </tr>
+                              <tr>
+                                <td>{{y.Account_number}}</td>
+                                <td>{{y.With_date}}</td>
+                                <td>transfor from {{y.Account_number}} to</td>
+                                <td>{{y.Transfor_amount_from}}</td>
+                              </tr>
+                          
+                              </table>
+</div>
+<div class="c"><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'home' %}"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
+    <div style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px">Transactions</div><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dep_user' %}">Deposit</a><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'with_user' %}">Withdraw</a><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'tran_from_user' %}">Transfor</a>
+  </div>
+  
+</div>
+
+</body>
+</html>

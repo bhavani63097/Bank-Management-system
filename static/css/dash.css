@@ -1,0 +1,26 @@
+.a{
+    height:40px;
+    width: 80%;
+    background-color: black;
+    color: white;
+    float: right;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.b{
+    height: 50px;
+    width:190px;
+    background-color:blue;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+}
+.c{
+    height: 900px;
+    width: 190px;
+    background-color: black;
+    color: white;
+    padding-top: 10px;
+
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
+  <style>
+    .d{
+      float:right;
+    color: red;
+    padding-right: 80px;
+  }
+    .e{
+      height: 90px;
+      width: 200px;
+      background-color: rgb(241, 240, 239);
+      margin-right: 60px;
+      float:right;
+      color: black;
+      text-align: center;
+      
+    }
+    .f{
+      height: 90px;
+      width: 200px;
+      background-color: rgb(241, 240, 239);
+      margin-left: 30px;
+      color:black;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
+  <div class="b">OBS</div>
+<div class="d"><h1>Welcome to Online Banking System</h1><br>
+  <div class="e"><br><br>Total Accounts:&nbsp;{{a}}</div> 
+  <div class="f"><br><br>Total Accounts Balance:&nbsp;{{y}}</div>
+ 
+</div>
+  <div class="c">
+  <div  style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</div><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-user" href="{% url 'account'%}">Account Management</a><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-th-list" href="{% url 'tran_admin'%}">Transaction</a><br><br>
+    &nbsp;&nbsp; &nbsp;&nbsp;<a class="glyphicon glyphicon-phone-alt" href="{% url 'announcement' %}">Annocements</a><br><br>
+    &nbsp;&nbsp;Manitenance<br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-cog">Settings</a>
+  </div>
+  
+</div>
+
+</body>
+</html>

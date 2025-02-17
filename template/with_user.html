@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
+  <style>
+    .d{
+      float:right;
+    padding-right: 80px;
+    margin-right: 400px;
+  }
+    .e{
+      height: 130px;
+      width: 200px;
+      background-color: rgb(241, 240, 239);
+      margin-right: 60px;
+      float:right;
+      color: black;
+      text-align: center;
+      padding-top: 30px;
+      margin-right:150px;
+      font-size:18px;
+    }
+  </style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
+  <div class="b">OBS</div>
+<div class="d"><h1>Withdraw</h1><hr>
+  <form method="post">
+    {% csrf_token %}
+    <label>Account Number</label><br>
+    {{x.Account_number}}<br><br>
+    <h3>Current Balance:{{obj.Current_balance}}</h3><br><br>
+    <label for="">Withdraw Amount</label><br>
+    {{x.Withdraw_amount}}<br><br>
+    <button class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="c">
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'home' %}"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'tran_user' %}">Transactions</a><br><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a  href="{% url 'dep_user'%}">Deposit</a><br><br>
+    <div style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px">Withdraw</div><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{%url 'tran_from_user' %}">Transfor</a>
+  </div>
+  
+</div>
+
+</body>
+</html>

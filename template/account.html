@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+{% load static%}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
+  <style>
+    .jumbotron{
+    float:right;
+    width: 745px;
+    }
+    
+    .out{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height:100%;
+      width: 100%;
+      position:absolute;
+      top:0%;
+      left:0%;
+      background-color:rgba(0,0,0,0.5);
+  }
+  .in{
+          background-color:white ;
+          width:600px ;
+          padding:20px 50px;
+          margin:10%;
+          border-radius: 5px;
+  } 
+  </style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
+  <div class="b">OBS</div>
+
+
+
+
+<div class="jumbotron">
+ <table class="table table-bordered table-stripped table-hover">
+
+
+     
+  <div class="row">
+    <div class="col-md-9">List of Accounts</div>
+    <div class="col-md-3">
+    <button class="glyphicon glyphicon-plus btn btn-primary "><a href="{% url 'add_account'%}" style="color: white;">CreateNew</a></button>
+    </div>
+  </div>
+
+<hr>
+<div class="row">
+  <div class="col-md-6">Show 10 entries</div>
+  <div class="col-md-6">
+  <form action="{% url 'account' %}" method="get">
+  <label for="">Search</label>
+  <input type="text" value="{{query}}" name='query'>
+</form>
+</div>
+</div>
+<br>
+
+      <tr>
+           <th>#</th>
+           <th>Account#</th>
+           <th>Name</th>
+           <th>Balance</th>
+           <th>Create_at</th>
+           <th>Update_at</th>
+           <th>Action</th>
+      </tr>
+{% if x %}
+        {% for i in x %}
+       <tr>
+           <td>{{i.id}}</td>
+           <td>{{i.Account_number}}</td>
+           <td>{{i.First_name}}{{i.Middle_name}}{{i.Last_name}}</td>
+           <td>{{i.Current_balance}}</td>
+           <td>{{i.Created_at}}</td>
+           <td>{{i.Updated_at}}</td>
+           <td>
+            <a class="glyphicon glyphicon-edit" href="{%url 'up_account' i.id%}"></a>
+            <a class="glyphicon glyphicon-trash" href="{% url 'del_account' i.id %}"></a>
+           </td>
+           
+       </tr>
+       {% endfor %}
+{% endif %}
+ </table>
+</div>
+
+
+
+
+
+  <div class="c">
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dash' %}"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
+    <div  style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px"><i class="glyphicon glyphicon-user"></i> Account Management</div><br>       
+    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-th-list" href="{% url 'tran_admin' %}">Transaction</a><br><br>
+    &nbsp;&nbsp; &nbsp;&nbsp;<a class="glyphicon glyphicon-phone-alt" href="{% url 'announcement' %}">Annocements</a><br><br>
+    &nbsp;&nbsp;Manitenance<br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-cog">Settings</a>
+  </div>
+  
+</div>
+
+
+
+
+
+{% if form %}
+<div class="out">
+  <div class="in">
+      <form method="post">
+        {% csrf_token %}
+        {{form}}
+        <button>Submit</button>
+      </form>
+  </div>
+</div> 
+{% endif %}
+
+
+{% if y %}
+<div class="out">
+  <div class="in">
+<form method="post">
+  {% csrf_token %}
+  {{y}}
+  <button>Submit</button>
+</form>
+  </div>
+</div>
+{% endif %}
+
+</body>
+</html>
