@@ -74,20 +74,15 @@ WSGI_APPLICATION = 'banking_management_system.wsgi.application'
 
 
 # Database
-# Uses DATABASE_URL env variable in production (PostgreSQL on Vercel),
-# falls back to SQLite for local development.
-DATABASE_URL = os.environ.get('DATABASE_URL', '')
+# Uses DATABASE_URL env variable if set, otherwise falls back to your Neon database
+DATABASE_URL = os.environ.get(
+    'DATABASE_URL', 
+    'postgresql://neondb_owner:npg_cytNiAqh50Rn@ep-quiet-smoke-anbffvq3.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require'
+)
 
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
     }
 
 

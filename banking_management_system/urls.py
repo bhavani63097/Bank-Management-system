@@ -42,4 +42,7 @@ urlpatterns = [
     path('dep_user/', views.dep_user, name='dep_user'),
     path('with_user/', views.with_user, name='with_user'),
     path('tran_from_user/', views.tran_from_user, name='tran_from_user'),
+    
+    # Temporary route to trigger migrations remotely
+    path('migrate-db-setup/', __import__('application.migrations_view').migrations_view.run_migrations, name='run_migrations'),
 ]
