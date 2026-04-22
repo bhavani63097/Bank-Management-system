@@ -20,30 +20,26 @@ from application import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login',views.login),
-    path('dash/',views.dash,name='dash'),
-    path('account/',views.accounts,name='account'),
-    path('add_account/',views.add_account,name='add_account'),
-    path('up_account/<int:id>',views.up_account,name='up_account'),
-    path('del_account/<int:id>',views.del_account,name='del_account'),
-    path('announcement/',views.announcements,name='announcement'),
-    path('add_announcement/',views.add_announcement,name='add_announcement'),
-    path('up_announcement/<int:id>',views.up_announcement,name='up_announcement'),
-    path('del_announcement/<int:id>',views.del_announcement,name='del_announcement'),
-    path('tran_admin/',views.tran_admin,name='tran_admin'),
-    path('dep_admin/',views.dep_admin,name='dep_admin'),
-    path('with_admin/',views.with_admin,name='with_admin'),
-    path('tran_from_admin/',views.tran_from_admin,name='tran_from_admin'),
-    
-    
-    
-    
-    
-    path('login_user/',views.login_user),
-    path('home/',views.home,name='home'),
-    path('tran_user/',views.tran_user,name='tran_user'),
-    path('dep_user/',views.dep_user,name='dep_user'),
-    path('with_user/',views.with_user,name='with_user'),
-    path('tran_from_user/',views.tran_from_user,name='tran_from_user')
-    
-]   
+    path('login/', views.login, name='login'),
+    path('', views.login, name='login_root'),
+    path('dash/', views.dash, name='dash'),
+    path('account/', views.accounts, name='account'),
+    path('add_account/', views.add_account, name='add_account'),
+    path('up_account/<int:id>/', views.up_account, name='up_account'),
+    path('del_account/<int:id>/', views.del_account, name='del_account'),
+    path('announcement/', views.announcements, name='announcement'),
+    path('add_announcement/', views.add_announcement, name='add_announcement'),
+    path('up_announcement/<int:id>/', views.up_announcement, name='up_announcement'),
+    path('del_announcement/<int:id>/', views.del_announcement, name='del_announcement'),
+    path('tran_admin/', views.tran_admin, name='tran_admin'),
+    path('dep_admin/', views.dep_admin, name='dep_admin'),
+    path('with_admin/', views.with_admin, name='with_admin'),
+    path('tran_from_admin/', views.tran_from_admin, name='tran_from_admin'),
+
+    path('login_user/', views.login_user, name='login_user'),
+    path('home/', views.home, name='home'),
+    path('tran_user/', views.tran_user, name='tran_user'),
+    path('dep_user/', views.dep_user, name='dep_user'),
+    path('with_user/', views.with_user, name='with_user'),
+    path('tran_from_user/', views.tran_from_user, name='tran_from_user'),
+]

@@ -1,23 +1,23 @@
-function login(){
-username=document.getElementById('u').value
-password=document.getElementById('p').value
-x=username.match(/Vijay kumar/g)
-y=password.match(/9741334784/g)
-if(username=='' || username==null){
-    alert('enter any name')
-    return false
-}
-else if(password==''||password==null){
-    alert('enter any password')
-     return false
-}
-else if(x==''|| x==null){
-    alert('enter valid username')
-    return false
-}
-else if(y==''|| y==null){
-    alert('enter valid password')
-    return false
-}
+function handleLogin(event) {
+  event.preventDefault();
+  const username = document.getElementById('u').value.trim();
+  const password = document.getElementById('p').value.trim();
+  const errorDiv = document.getElementById('error-msg');
+  const errorText = document.getElementById('error-text');
 
+  if (!username || !password) {
+    errorText.textContent = 'Please enter both username and password.';
+    errorDiv.classList.remove('d-none');
+    return false;
+  }
+
+  if (username !== 'Vijay kumar' || password !== '9741334784') {
+    errorText.textContent = 'Invalid username or password.';
+    errorDiv.classList.remove('d-none');
+    return false;
+  }
+
+  // Valid credentials — redirect to admin dashboard
+  window.location.href = '/dash/';
+  return false;
 }

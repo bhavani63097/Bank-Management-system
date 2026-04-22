@@ -1,67 +1,122 @@
 <!DOCTYPE html>
-{% load static%}
+{% load static %}
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
-  <style>
-    .jumbotron{
-      float:right;
-    padding-right: 80px;
-    width:700px;
-  }
-  .t{
-    color: black;
-    background-color: white;
-    height: 35px;
-    width:200px;
-    padding-left: 30px;
-    margin-top: 10px;
-    
-  }
-    
-  </style>
+  <title>Admin Deposit – Online Banking System</title>
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{% static 'css/dash.css' %}" rel="stylesheet">
 </head>
 <body>
-  
-<div class="container">
-  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
-  <div class="b">OBS</div>
-  <div class="jumbotron">
-<div class="d" >
-  <form method="get" action="{% url 'dep_admin' %}">
-    <label>Account Number:</label><br>
-    <input type="text"  value="{{query}}" name="query">
-  <br><br>
-  <label>Name</label><br>
-  <input type="text" placeholder="{{x.First_name}}{{x.Middle_name}}{{x.Last_name}}"><br><br>
-  <label>Balance</label><br>
-  <input type="text" placeholder="{{x.Current_balance}}"><br><br>
-  <label>Deposit amount</label><br>
-  <input type="number" placeholder="enter deposit amount" name="query_1" value="{{query_1}}"><br><br>
-<button>submit</button>
-</form>
-</div>
-</div>
-  <div class="c">
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dash' %}" ><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-user" href="{% url 'account'%}">Account Management</a><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<div class="glyphicon glyphicon-th-list" style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px">Transaction</div><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{%url 'tran_admin' %}" >1.Transactions</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="t">2.Deposit</div>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'with_admin' %}">3.Withdraw</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'tran_from_admin' %}">4.Transfer</a><br><br>
-    &nbsp;&nbsp; &nbsp;&nbsp;<a class="glyphicon glyphicon-phone-alt" href="{% url 'announcement' %}">Annocements</a><br><br>
-    &nbsp;&nbsp;Manitenance<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-cog">Settings</a>
-  </div>
-  
+
+<div class="obs-wrapper">
+  <!-- Sidebar -->
+  <aside class="obs-sidebar" id="sidebar">
+    <a href="{% url 'dash' %}" class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+      <div class="brand-text">OBS Admin<span>Online Banking System</span></div>
+    </a>
+    
+    <div class="sidebar-nav">
+      <div class="sidebar-section-title">Main Menu</div>
+      <a href="{% url 'dash' %}" class="sidebar-link">
+        <i class="fa-solid fa-house"></i> Dashboard
+      </a>
+      <a href="{% url 'account' %}" class="sidebar-link">
+        <i class="fa-solid fa-users"></i> Account Management
+      </a>
+      <a href="{% url 'tran_admin' %}" class="sidebar-link active">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transactions
+      </a>
+      <div class="sidebar-sub">
+        <a href="{% url 'tran_admin' %}" class="sidebar-link">All Transactions</a>
+        <a href="{% url 'dep_admin' %}" class="sidebar-link active">Deposits</a>
+        <a href="{% url 'with_admin' %}" class="sidebar-link">Withdrawals</a>
+        <a href="{% url 'tran_from_admin' %}" class="sidebar-link">Transfers</a>
+      </div>
+      <a href="{% url 'announcement' %}" class="sidebar-link">
+        <i class="fa-solid fa-bullhorn"></i> Announcements
+      </a>
+      
+      <div class="sidebar-section-title mt-3">System</div>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-wrench"></i> Maintenance
+      </a>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-gear"></i> Settings
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="obs-main">
+    <!-- Topbar -->
+    <header class="obs-topbar">
+      <div class="topbar-left">
+        <button class="obs-btn-icon d-md-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="topbar-title">Deposit Funds</div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge">Admin Portal</span>
+        <div class="topbar-avatar">A</div>
+        <a href="{% url 'login' %}" class="obs-btn obs-btn-outline obs-btn-sm ms-2">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="obs-content d-flex justify-content-center">
+      <div class="obs-card" style="max-width: 500px; width: 100%;">
+        <div class="obs-card-header">
+          <div class="obs-card-title">Process Deposit</div>
+        </div>
+        <div class="obs-card-body">
+          <form method="get" action="{% url 'dep_admin' %}">
+            
+            <div class="obs-form-group">
+              <label>Account Number</label>
+              <div class="input-group">
+                <input type="text" class="obs-form-control" value="{{query}}" name="query" placeholder="Enter account number">
+                <button class="obs-btn obs-btn-primary ms-2" type="submit" style="border-radius: 8px;">Find</button>
+              </div>
+            </div>
+
+            <div class="obs-form-group">
+              <label>Account Holder Name</label>
+              <input type="text" class="obs-form-control" placeholder="{{x.First_name}} {{x.Middle_name}} {{x.Last_name}}" readonly>
+            </div>
+
+            <div class="obs-form-group">
+              <label>Current Balance</label>
+              <input type="text" class="obs-form-control" placeholder="{% if x.Current_balance %}₹ {{x.Current_balance}}{% endif %}" readonly>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="obs-form-group">
+              <label>Deposit Amount</label>
+              <input type="number" class="obs-form-control" placeholder="Enter amount to deposit" name="query_1" value="{{query_1}}" step="any">
+            </div>
+
+            <button type="submit" class="obs-btn obs-btn-success w-100 justify-content-center mt-2" style="padding: 12px;">
+              <i class="fa-solid fa-money-bill-wave me-2"></i> Confirm Deposit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

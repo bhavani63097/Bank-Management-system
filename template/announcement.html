@@ -1,143 +1,192 @@
 <!DOCTYPE html>
-
-{% load static%}
+{% load static %}
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
+  <title>Announcements – Online Banking System</title>
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{% static 'css/dash.css' %}" rel="stylesheet">
   <style>
-    .jumbotron{
-    float:right;
-    width: 745px;
+    /* Add form styling for default django forms inside modal */
+    .obs-modal form p { margin-bottom: 16px; }
+    .obs-modal form label { display: block; font-size: 13px; font-weight: 500; color: var(--text-main); margin-bottom: 6px; }
+    .obs-modal form input, .obs-modal form select, .obs-modal form textarea {
+      width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px;
     }
-    
-    .out{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height:100%;
-      width: 100%;
-      position:absolute;
-      top:0%;
-      left:0%;
-      background-color:rgba(0,0,0,0.5);
-  }
-  .in{
-          background-color:white ;
-          width:600px ;
-          padding:20px 50px;
-          margin:10%;
-          border-radius: 5px;
-          text-align: center;
-  } 
+    .obs-modal form input:focus, .obs-modal form textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.1); }
   </style>
 </head>
 <body>
-  
-<div class="container">
-  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
-  <div class="b">OBS</div>
 
-
-
-
-<div class="jumbotron">
- <table class="table table-bordered table-stripped table-hover">
-
-
-     
-  <div class="row">
-    <div class="col-md-9">List of Announcements</div>
-    <div class="col-md-3">
-    <button class="glyphicon glyphicon-plus btn btn-primary "><a href="{% url 'add_announcement' %}" style="color: white;">CreateNew</a></button>
+<div class="obs-wrapper">
+  <!-- Sidebar -->
+  <aside class="obs-sidebar" id="sidebar">
+    <a href="{% url 'dash' %}" class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+      <div class="brand-text">OBS Admin<span>Online Banking System</span></div>
+    </a>
+    
+    <div class="sidebar-nav">
+      <div class="sidebar-section-title">Main Menu</div>
+      <a href="{% url 'dash' %}" class="sidebar-link">
+        <i class="fa-solid fa-house"></i> Dashboard
+      </a>
+      <a href="{% url 'account' %}" class="sidebar-link">
+        <i class="fa-solid fa-users"></i> Account Management
+      </a>
+      <a href="{% url 'tran_admin' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transactions
+      </a>
+      <a href="{% url 'announcement' %}" class="sidebar-link active">
+        <i class="fa-solid fa-bullhorn"></i> Announcements
+      </a>
+      
+      <div class="sidebar-section-title mt-3">System</div>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-wrench"></i> Maintenance
+      </a>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-gear"></i> Settings
+      </a>
     </div>
-  </div>
+  </aside>
 
-<hr>
-<div class="row">
-  <div class="col-md-6">Show 10 entries</div>
-  <div class="col-md-6">
-  <form action="{% url 'announcement' %}" method="get">
-  <label for="">Search</label>
-  <input type="text" value="{{query}}" name='query'>
-</form>
+  <!-- Main Content -->
+  <main class="obs-main">
+    <!-- Topbar -->
+    <header class="obs-topbar">
+      <div class="topbar-left">
+        <button class="obs-btn-icon d-md-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="topbar-title">Announcements</div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge">Admin Portal</span>
+        <div class="topbar-avatar">A</div>
+        <a href="{% url 'login' %}" class="obs-btn obs-btn-outline obs-btn-sm ms-2">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="obs-content">
+      
+      <div class="obs-card mb-4">
+        <div class="obs-card-header">
+          <div class="obs-card-title">List of Announcements</div>
+          <a href="{% url 'add_announcement' %}" class="obs-btn obs-btn-primary">
+            <i class="fa-solid fa-plus"></i> Create New
+          </a>
+        </div>
+        
+        <div class="obs-card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div style="font-size: 14px; color: var(--text-muted);">
+              Manage system-wide announcements for users.
+            </div>
+            
+            <!-- Search -->
+            <form action="{% url 'announcement' %}" method="get" class="obs-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" value="{{query}}" name="query" placeholder="Search announcements...">
+            </form>
+          </div>
+
+          <!-- Table -->
+          <div class="obs-table-wrap">
+            <table class="obs-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date Created</th>
+                  <th>Title</th>
+                  <th>Body</th>
+                  <th>Date Updated</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if x %}
+                  {% for i in x %}
+                  <tr>
+                    <td>{{ i.id }}</td>
+                    <td style="color: var(--text-muted); font-size: 13px;">{{ i.Date_created }}</td>
+                    <td style="font-weight: 600;">{{ i.Title }}</td>
+                    <td style="color: var(--text-muted); max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ i.Announcement }}</td>
+                    <td style="color: var(--text-muted); font-size: 13px;">{{ i.Date_updated }}</td>
+                    <td class="text-end">
+                      <a href="{% url 'up_announcement' i.id %}" class="obs-btn-icon action-edit" title="Edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </a>
+                      <a href="{% url 'del_announcement' i.id %}" class="obs-btn-icon action-delete ms-1" title="Delete">
+                        <i class="fa-solid fa-trash-can"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td colspan="6" class="text-center py-4" style="color: var(--text-muted);">No announcements found.</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </div>
-</div>
-<br>
 
-      <tr>
-           <th>#</th>
-           <th>Date_created</th>
-           <th>Title</th>
-           <th>Body</th>
-           <th>Date_updated</th>
-           <th>Action</th>
-      </tr>
-{% if x %}
-        {% for i in x %}
-       <tr>
-           <td>{{i.id}}</td>
-           <td>{{i.Date_created}}</td>
-           <td>{{i.Title}}</td>
-           <td>{{i.Announcement}}</td>
-           <td>{{i.Date_updated}}</td>
-           <td>
-            <a class="glyphicon glyphicon-edit" href="{%url 'up_announcement' i.id%}"></a>
-            <a class="glyphicon glyphicon-trash" href="{% url 'del_announcement' i.id%}" ></a>
-           </td>
-           
-       </tr>
-       {% endfor %}
-{% endif %}
- </table>
-</div>
-
-
-
-
-
-  <div class="c">
-  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dash' %}"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'account' %}"><i class="glyphicon glyphicon-user"></i> Account Management</a><br><br>       
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-th-list" href="{%url 'tran_admin'%}">Transaction</a><br><br>
-    <div style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px"><i class="glyphicon glyphicon-phone-alt"></i>Annocements</div><br>
-    &nbsp;&nbsp;Manitenance<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-cog">Settings</a>
-  </div>
-  
-</div>
-
-
+<!-- Modal for Form (if present) -->
 {% if form %}
-<div class="out">
-  <div class="in">
-      <form method="post">
-        {% csrf_token %}
-        {{form}}
-        <button>Submit</button>
-      </form>
+<div class="obs-modal-backdrop">
+  <div class="obs-modal">
+    <div class="obs-modal-header">
+      <div class="obs-modal-title">Announcement Details</div>
+      <a href="{% url 'announcement' %}" class="obs-modal-close"><i class="fa-solid fa-xmark"></i></a>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <div class="mt-4 pt-3 border-top text-end">
+        <a href="{% url 'announcement' %}" class="obs-btn obs-btn-outline me-2">Cancel</a>
+        <button type="submit" class="obs-btn obs-btn-primary">Save Announcement</button>
+      </div>
+    </form>
   </div>
-</div> 
-{% endif %} 
+</div>
+{% endif %}
 
-
-
+<!-- Modal for secondary Form (if present) -->
 {% if y %}
-<div class="out">
-  <div class="in">
-      <form method="post">
-        {% csrf_token %}
-        {{y}}
-        <button>Submit</button>
-      </form>
+<div class="obs-modal-backdrop">
+  <div class="obs-modal">
+    <div class="obs-modal-header">
+      <div class="obs-modal-title">Update Announcement Details</div>
+      <a href="{% url 'announcement' %}" class="obs-modal-close"><i class="fa-solid fa-xmark"></i></a>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      {{ y }}
+      <div class="mt-4 pt-3 border-top text-end">
+        <a href="{% url 'announcement' %}" class="obs-btn obs-btn-outline me-2">Cancel</a>
+        <button type="submit" class="obs-btn obs-btn-primary">Update</button>
+      </div>
+    </form>
   </div>
-</div> 
-{% endif %} 
+</div>
+{% endif %}
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

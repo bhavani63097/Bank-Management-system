@@ -130,77 +130,108 @@ def tran_from_admin(request):
       y.save()
     return render(request, 'tran_from_admin.html', {'x': x, 'query': query, 'query_1': query_1,'y':y,'query_2':query_2})
 
-def login_user(request): 
+def login_user(request):
+    error = None
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password=request.POST.get('password')
-        filtered_data = account.objects.filter(Email=email) & account.objects.filter(Password=password)
-        request.session['filtered_data_Account_number'] = list(filtered_data.values_list('Account_number', flat=True))  
-        return redirect('home')  
-    return render(request,'login_user.html')
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '').strip()
+        filtered_data = account.objects.filter(Email=email, Password=password)
+        if filtered_data.exists():
+            request.session['filtered_data_Account_number'] = list(
+                filtered_data.values_list('Account_number', flat=True)
+            )
+            return redirect('home')
+        else:
+            error = 'Invalid email or password. Please try again.'
+    return render(request, 'login_user.html', {'error': error})
 
 
 def home(request):
     filtered_data_Account_number = request.session.get('filtered_data_Account_number', [])
+    if not filtered_data_Account_number:
+        return redirect('login_user')
     x = account.objects.filter(Account_number__in=filtered_data_Account_number)
-    return render(request, 'home.html', {'x':x})
+    return render(request, 'home.html', {'x': x})
+
+
 def tran_user(request):
-  filtered_data_Account_number=request.session.get('filtered_data_Account_number',[])
-  x=account.objects.filter(Account_number__in=filtered_data_Account_number)
-  a=filtered_data_Account_number[0]
-  y=account.objects.get(Account_number=a)
-  # z=account.objects.get(Account_number=a)
-  
-  return render(request,'tran_user.html',{'x':x,'y':y})
+    filtered_data_Account_number = request.session.get('filtered_data_Account_number', [])
+    if not filtered_data_Account_number:
+        return redirect('login_user')
+    a = filtered_data_Account_number[0]
+    x = account.objects.filter(Account_number__in=filtered_data_Account_number)
+    y = account.objects.get(Account_number=a)
+    return render(request, 'tran_user.html', {'x': x, 'y': y})
 
 
 def dep_user(request):
-  filtered_data_Account_number=request.session.get('filtered_data_Account_number',[])
-  a=filtered_data_Account_number[0]
-  x=deposit_form(initial={'Account_number':a})
-  obj=account.objects.get(Account_number=a)
-  if request.method=="POST":
-    x=deposit_form(request.POST)
-    if x.is_valid():
-       deposit = x.save(commit=False)
-       obj.Deposit_amount = deposit.Deposit_amount
-       obj.Current_balance+=obj.Deposit_amount
-       obj.Dep_date=now()
-       obj.save()
-  return render(request,'dep_user.html',{'x':x,'obj':obj})
+    filtered_data_Account_number = request.session.get('filtered_data_Account_number', [])
+    if not filtered_data_Account_number:
+        return redirect('login_user')
+    a = filtered_data_Account_number[0]
+    obj = account.objects.get(Account_number=a)
+    x = deposit_form(initial={'Account_number': a})
+    if request.method == 'POST':
+        x = deposit_form(request.POST)
+        if x.is_valid():
+            deposit = x.save(commit=False)
+            obj.Deposit_amount = deposit.Deposit_amount
+            obj.Current_balance += obj.Deposit_amount
+            obj.Dep_date = now()
+            obj.save()
+            return redirect('home')
+    return render(request, 'dep_user.html', {'x': x, 'obj': obj})
 
 
 def with_user(request):
-  filtered_data_Account_number=request.session.get('filtered_data_Account_number',[])
-  a=filtered_data_Account_number[0]
-  x=withdraw_form(initial={'Account_number':a})
-  obj=account.objects.get(Account_number=a)
-  if request.method=="POST":
-    x=withdraw_form(request.POST)
-    if x.is_valid():
-       form= x.save(commit=False)
-       obj.Withdraw_amount= form.Withdraw_amount
-       obj.Current_balance-=obj.Withdraw_amount
-       obj.With_date=now()
-       obj.save()
-  return render(request,'with_user.html',{'x':x,'obj':obj})
+    filtered_data_Account_number = request.session.get('filtered_data_Account_number', [])
+    if not filtered_data_Account_number:
+        return redirect('login_user')
+    a = filtered_data_Account_number[0]
+    obj = account.objects.get(Account_number=a)
+    x = withdraw_form(initial={'Account_number': a})
+    if request.method == 'POST':
+        x = withdraw_form(request.POST)
+        if x.is_valid():
+            form = x.save(commit=False)
+            obj.Withdraw_amount = form.Withdraw_amount
+            if obj.Withdraw_amount > obj.Current_balance:
+                x.add_error(None, 'Insufficient balance for this withdrawal.')
+            else:
+                obj.Current_balance -= obj.Withdraw_amount
+                obj.With_date = now()
+                obj.save()
+                return redirect('home')
+    return render(request, 'with_user.html', {'x': x, 'obj': obj})
 
 
 def tran_from_user(request):
-  filtered_data_Account_number=request.session.get('filtered_data_Account_number',[])
-  a=filtered_data_Account_number[0]
-  x=transfor_form(initial={'Account_number':a})
-  obj=account.objects.get(Account_number=a)
-  if request.method=="POST":
-    x=transfor_form(request.POST)
-    if x.is_valid():
-       form= x.save(commit=False)
-       transfor=request.POST.get('transfor')
-       to=account.objects.get(Account_number=transfor) 
-       obj.Transfor_amount_from= form.Transfor_amount_from
-       obj.Current_balance-=obj.Transfor_amount_from
-       to.Current_balance+=obj.Transfor_amount_from
-       to.save()
-       obj.save() 
-  return render(request,'tran_from_user.html',{'x':x,'obj':obj})
+    filtered_data_Account_number = request.session.get('filtered_data_Account_number', [])
+    if not filtered_data_Account_number:
+        return redirect('login_user')
+    a = filtered_data_Account_number[0]
+    obj = account.objects.get(Account_number=a)
+    x = transfor_form(initial={'Account_number': a})
+    error = None
+    if request.method == 'POST':
+        x = transfor_form(request.POST)
+        if x.is_valid():
+            form = x.save(commit=False)
+            transfor = request.POST.get('transfor', '').strip()
+            try:
+                to = account.objects.get(Account_number=transfor)
+                obj.Transfor_amount_from = form.Transfor_amount_from
+                if obj.Transfor_amount_from > obj.Current_balance:
+                    error = 'Insufficient balance for this transfer.'
+                elif to.Account_number == obj.Account_number:
+                    error = 'Cannot transfer to the same account.'
+                else:
+                    obj.Current_balance -= obj.Transfor_amount_from
+                    to.Current_balance += obj.Transfor_amount_from
+                    to.save()
+                    obj.save()
+                    return redirect('home')
+            except account.DoesNotExist:
+                error = f'Account "{transfor}" not found.'
+    return render(request, 'tran_from_user.html', {'x': x, 'obj': obj, 'error': error})
 

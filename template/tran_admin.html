@@ -1,85 +1,143 @@
 <!DOCTYPE html>
-{% load static%}
+{% load static %}
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
-  <style>
-    .jumbotron{
-      float:right;
-    padding-right: 80px;
-    width:700px;
-  }
-  .t{
-    color: black;
-    background-color: white;
-    height: 35px;
-    width:200px;
-    padding-left: 30px;
-    margin-top: 10px;
-    
-  }
-    
-  </style>
+  <title>All Transactions – Online Banking System</title>
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{% static 'css/dash.css' %}" rel="stylesheet">
 </head>
 <body>
-  
-<div class="container">
-  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
-  <div class="b">OBS</div>
-  <div class="jumbotron">
-<div class="d" >
-  
-  <table class="table table-bordered table-hover table-striped">
-   <div class="row"> 
-    <div class="col-md-8">Transactions</div>
-    <div class="col-md-4"  >
-      <form  method="get" action="{% url 'tran_admin' %}"> 
-      <input type="text" name="query" value="{{query}}">
-    </form>
+
+<div class="obs-wrapper">
+  <!-- Sidebar -->
+  <aside class="obs-sidebar" id="sidebar">
+    <a href="{% url 'dash' %}" class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+      <div class="brand-text">OBS Admin<span>Online Banking System</span></div>
+    </a>
+    
+    <div class="sidebar-nav">
+      <div class="sidebar-section-title">Main Menu</div>
+      <a href="{% url 'dash' %}" class="sidebar-link">
+        <i class="fa-solid fa-house"></i> Dashboard
+      </a>
+      <a href="{% url 'account' %}" class="sidebar-link">
+        <i class="fa-solid fa-users"></i> Account Management
+      </a>
+      <a href="{% url 'tran_admin' %}" class="sidebar-link active">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transactions
+      </a>
+      <!-- Transaction Submenu -->
+      <div class="sidebar-sub">
+        <a href="{% url 'tran_admin' %}" class="sidebar-link active">All Transactions</a>
+        <a href="{% url 'dep_admin' %}" class="sidebar-link">Deposits</a>
+        <a href="{% url 'with_admin' %}" class="sidebar-link">Withdrawals</a>
+        <a href="{% url 'tran_from_admin' %}" class="sidebar-link">Transfers</a>
+      </div>
+
+      <a href="{% url 'announcement' %}" class="sidebar-link">
+        <i class="fa-solid fa-bullhorn"></i> Announcements
+      </a>
+      
+      <div class="sidebar-section-title mt-3">System</div>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-wrench"></i> Maintenance
+      </a>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-gear"></i> Settings
+      </a>
     </div>
-   </div><br><br>
-    <tr><th>Account</th>
-        <th>Name</th>
-        <th>Last Deposit amount</th>
-        <th>Deposit date</th>
-        <th>Last Withdraw amount</th>
-        <th>withdraw date</th>
-        <th>Last Transfor amount</th>
-    </tr>
-    {% for i in x %}
-    <tr><td>{{i.Account_number}}</td>
-        <td>{{i.First_name}}&nbsp;{{i.Middle_name}}&nbsp;{{i.Last_name}}</td>
-        <td>{{i.Deposit_amount}}</td>
-        <td>{{i.Dep_date}}</td>
-        <td>{{i.Withdraw_amount}}</td>
-        <td>{{i.With_date}}</td>
-        <td>{{i.Transfor_amount_from}}</td>
-  
-    </tr>
-    {% endfor %}
-  </table>
-</div>
-</div>
-  <div class="c">
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dash' %}" ><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-user" href="{% url 'account'%}">Account Management</a><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<div class="glyphicon glyphicon-th-list" style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px">Transaction</div><br>
-    <div class="t">1.Transactions</div>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dep_admin' %}">2.Deposit</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'with_admin' %}">3.Withdraw</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'tran_from_admin' %}">4.Transfer</a><br><br>
-    &nbsp;&nbsp; &nbsp;&nbsp;<a class="glyphicon glyphicon-phone-alt" href="{% url 'announcement' %}">Annocements</a><br><br>
-    &nbsp;&nbsp;Manitenance<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-cog">Settings</a>
-  </div>
-  
+  </aside>
+
+  <!-- Main Content -->
+  <main class="obs-main">
+    <!-- Topbar -->
+    <header class="obs-topbar">
+      <div class="topbar-left">
+        <button class="obs-btn-icon d-md-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="topbar-title">All Transactions</div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge">Admin Portal</span>
+        <div class="topbar-avatar">A</div>
+        <a href="{% url 'login' %}" class="obs-btn obs-btn-outline obs-btn-sm ms-2">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="obs-content">
+      
+      <div class="obs-card">
+        <div class="obs-card-header">
+          <div class="obs-card-title">Transaction Overview</div>
+        </div>
+        
+        <div class="obs-card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div style="font-size: 14px; color: var(--text-muted);">
+              View all transaction types including deposits, withdrawals, and transfers.
+            </div>
+            
+            <!-- Search -->
+            <form action="{% url 'tran_admin' %}" method="get" class="obs-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" value="{{query}}" name="query" placeholder="Search transactions...">
+            </form>
+          </div>
+
+          <!-- Table -->
+          <div class="obs-table-wrap">
+            <table class="obs-table">
+              <thead>
+                <tr>
+                  <th>Account</th>
+                  <th>Name</th>
+                  <th>Last Deposit</th>
+                  <th>Deposit Date</th>
+                  <th>Last Withdraw</th>
+                  <th>Withdraw Date</th>
+                  <th>Last Transfer</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if x %}
+                  {% for i in x %}
+                  <tr>
+                    <td><span class="acc-badge">{{ i.Account_number }}</span></td>
+                    <td style="font-weight: 500;">{{ i.First_name }} {{ i.Middle_name }} {{ i.Last_name }}</td>
+                    <td style="color: var(--success); font-weight: 600;">{% if i.Deposit_amount %}₹ {{ i.Deposit_amount }}{% else %}-{% endif %}</td>
+                    <td style="color: var(--text-muted);">{{ i.Dep_date|default:"-" }}</td>
+                    <td style="color: var(--danger); font-weight: 600;">{% if i.Withdraw_amount %}₹ {{ i.Withdraw_amount }}{% else %}-{% endif %}</td>
+                    <td style="color: var(--text-muted);">{{ i.With_date|default:"-" }}</td>
+                    <td style="color: var(--primary); font-weight: 600;">{% if i.Transfor_amount_from %}₹ {{ i.Transfor_amount_from }}{% else %}-{% endif %}</td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td colspan="7" class="text-center py-4" style="color: var(--text-muted);">No transactions found.</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

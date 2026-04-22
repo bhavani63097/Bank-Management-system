@@ -1,60 +1,123 @@
 <!DOCTYPE html>
-{% load static%}
+{% load static %}
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
-  <style>
-    .d{
-      float:right;
-    color: red;
-    padding-right: 80px;
-  }
-    .e{
-      height: 90px;
-      width: 200px;
-      background-color: rgb(241, 240, 239);
-      margin-right: 60px;
-      float:right;
-      color: black;
-      text-align: center;
-      
-    }
-    .f{
-      height: 90px;
-      width: 200px;
-      background-color: rgb(241, 240, 239);
-      margin-left: 30px;
-      color:black;
-      text-align: center;
-    }
-  </style>
+  <title>Admin Dashboard – Online Banking System</title>
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{% static 'css/dash.css' %}" rel="stylesheet">
 </head>
 <body>
-  
-<div class="container">
-  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
-  <div class="b">OBS</div>
-<div class="d"><h1>Welcome to Online Banking System</h1><br>
-  <div class="e"><br><br>Total Accounts:&nbsp;{{a}}</div> 
-  <div class="f"><br><br>Total Accounts Balance:&nbsp;{{y}}</div>
- 
-</div>
-  <div class="c">
-  <div  style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</div><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-user" href="{% url 'account'%}">Account Management</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-th-list" href="{% url 'tran_admin'%}">Transaction</a><br><br>
-    &nbsp;&nbsp; &nbsp;&nbsp;<a class="glyphicon glyphicon-phone-alt" href="{% url 'announcement' %}">Annocements</a><br><br>
-    &nbsp;&nbsp;Manitenance<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a class="glyphicon glyphicon-cog">Settings</a>
-  </div>
-  
+
+<div class="obs-wrapper">
+  <!-- Sidebar -->
+  <aside class="obs-sidebar" id="sidebar">
+    <a href="{% url 'dash' %}" class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+      <div class="brand-text">OBS Admin<span>Online Banking System</span></div>
+    </a>
+    
+    <div class="sidebar-nav">
+      <div class="sidebar-section-title">Main Menu</div>
+      <a href="{% url 'dash' %}" class="sidebar-link active">
+        <i class="fa-solid fa-house"></i> Dashboard
+      </a>
+      <a href="{% url 'account' %}" class="sidebar-link">
+        <i class="fa-solid fa-users"></i> Account Management
+      </a>
+      <a href="{% url 'tran_admin' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transactions
+      </a>
+      <a href="{% url 'announcement' %}" class="sidebar-link">
+        <i class="fa-solid fa-bullhorn"></i> Announcements
+      </a>
+      
+      <div class="sidebar-section-title mt-3">System</div>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-wrench"></i> Maintenance
+      </a>
+      <a href="#" class="sidebar-link">
+        <i class="fa-solid fa-gear"></i> Settings
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="obs-main">
+    <!-- Topbar -->
+    <header class="obs-topbar">
+      <div class="topbar-left">
+        <button class="obs-btn-icon d-md-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="topbar-title">Dashboard Overview</div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge">Admin Portal</span>
+        <div class="topbar-avatar">A</div>
+        <a href="{% url 'login' %}" class="obs-btn obs-btn-outline obs-btn-sm ms-2">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="obs-content">
+      <h2 class="mb-4" style="font-weight: 700; color: var(--text-main);">Welcome to Admin Dashboard</h2>
+      
+      <div class="row g-4 mb-4">
+        <!-- Total Accounts Card -->
+        <div class="col-md-6 col-lg-4">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <div>
+              <div class="stat-label">Total Accounts</div>
+              <div class="stat-value">{{a}}</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Total Accounts Balance Card -->
+        <div class="col-md-6 col-lg-4">
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+            <div>
+              <div class="stat-label">Total Accounts Balance</div>
+              <div class="stat-value">₹ {{y}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions Card -->
+        <div class="col-md-6 col-lg-4">
+          <a href="{% url 'account' %}" style="text-decoration: none;">
+            <div class="stat-card" style="cursor: pointer;">
+              <div class="stat-icon purple">
+                <i class="fa-solid fa-user-plus"></i>
+              </div>
+              <div>
+                <div class="stat-label">Quick Action</div>
+                <div class="stat-value" style="font-size: 18px; margin-top: 4px;">Manage Accounts</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,62 +1,130 @@
 <!DOCTYPE html>
-{% load static%}
+{% load static %}
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
-  <style>
-    .d{
-      float:right;
-    color: red;
-    padding-right: 80px;
-  }
-    .e{
-      height: 130px;
-      width: 200px;
-      background-color: rgb(241, 240, 239);
-      margin-right: 60px;
-      float:right;
-      color: black;
-      text-align: center;
-      padding-top: 30px;
-      margin-right:150px;
-      font-size:18px;
-    }
-  </style>
+  <title>Customer Dashboard – Online Banking System</title>
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{% static 'css/dash.css' %}" rel="stylesheet">
 </head>
 <body>
-  
-<div class="container">
-  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
-  <div class="b">OBS</div>
-<div class="d"><h1>Welcome to Online Banking System</h1><br>
-  
-    {% if x %}
-      {% for item in x %}
-          <div class="e">Account number:{{item.Account_number}}<br><br>
-                         Current balance:{{item.Current_balance}}
+
+<div class="obs-wrapper">
+  <!-- Sidebar -->
+  <aside class="obs-sidebar" id="sidebar">
+    <a href="{% url 'home' %}" class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+      <div class="brand-text">OBS Customer<span>Online Banking System</span></div>
+    </a>
+    
+    <div class="sidebar-nav">
+      <div class="sidebar-section-title">My Account</div>
+      <a href="{% url 'home' %}" class="sidebar-link active">
+        <i class="fa-solid fa-house"></i> Dashboard
+      </a>
+      <a href="{% url 'tran_user' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-check-dollar"></i> Transactions
+      </a>
+      
+      <div class="sidebar-section-title mt-3">Services</div>
+      <a href="{% url 'dep_user' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-bill-trend-up"></i> Deposit
+      </a>
+      <a href="{% url 'with_user' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-bills"></i> Withdraw
+      </a>
+      <a href="{% url 'tran_from_user' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transfer
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="obs-main">
+    <!-- Topbar -->
+    <header class="obs-topbar">
+      <div class="topbar-left">
+        <button class="obs-btn-icon d-md-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="topbar-title">Account Overview</div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge" style="background: #e0e7ff; color: #4338ca;">Customer</span>
+        <div class="topbar-avatar" style="background: linear-gradient(135deg, #4338ca, #3b82f6);">U</div>
+        <a href="{% url 'login_user' %}" class="obs-btn obs-btn-outline obs-btn-sm ms-2">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="obs-content">
+      <h2 class="mb-4" style="font-weight: 700; color: var(--text-main);">Welcome Back</h2>
+      
+      {% if x %}
+        <div class="row g-4">
+          {% for item in x %}
+          <div class="col-md-6 col-lg-5">
+            <div class="balance-display">
+              <div class="bal-label">Current Balance</div>
+              <div class="bal-amount">₹ {{ item.Current_balance }}</div>
+              <div class="bal-acc">A/C: {{ item.Account_number }}</div>
+            </div>
           </div>
-      {% endfor %}
+          {% endfor %}
+        </div>
       {% else %}
-       <h1>DATA NOT EXIST WITH THIS MAIL</h1>
-       {% endif %}
-  
-  
-</div>
-<div class="c">
-  <div  style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</div><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'tran_user' %}">Transactions</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dep_user' %}">Deposit</a><br><br>
-    &nbsp;&nbsp; &nbsp;&nbsp;<a href="{% url 'with_user' %}">Withdraw</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{%url 'tran_from_user' %}">Transfor</a>
-  </div>
-  
+        <div class="obs-card mb-4">
+          <div class="obs-card-body text-center py-5">
+            <div style="font-size: 40px; color: var(--danger); margin-bottom: 12px;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 style="font-weight: 600;">Data Not Found</h4>
+            <p style="color: var(--text-muted);">No account exists with this email address.</p>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="row mt-2 g-4">
+        <div class="col-md-4">
+          <a href="{% url 'dep_user' %}" style="text-decoration: none;">
+            <div class="stat-card" style="cursor: pointer;">
+              <div class="stat-icon green">
+                <i class="fa-solid fa-arrow-down"></i>
+              </div>
+              <div>
+                <div class="stat-label">Action</div>
+                <div class="stat-value" style="font-size: 16px; margin-top: 2px;">Deposit Funds</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="{% url 'tran_from_user' %}" style="text-decoration: none;">
+            <div class="stat-card" style="cursor: pointer;">
+              <div class="stat-icon purple">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+              </div>
+              <div>
+                <div class="stat-label">Action</div>
+                <div class="stat-value" style="font-size: 16px; margin-top: 2px;">Transfer Money</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

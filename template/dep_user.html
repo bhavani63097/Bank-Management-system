@@ -1,59 +1,117 @@
 <!DOCTYPE html>
-{% load static%}
+{% load static %}
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link href="{% static 'css/dash.css'%}" rel="stylesheet">
+  <title>Customer Deposit – Online Banking System</title>
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{% static 'css/dash.css' %}" rel="stylesheet">
   <style>
-    .d{
-      float:right;
-    padding-right: 80px;
-    margin-right: 400px;
-  }
-    .e{
-      height: 130px;
-      width: 200px;
-      background-color: rgb(241, 240, 239);
-      margin-right: 60px;
-      float:right;
-      color: black;
-      text-align: center;
-      padding-top: 30px;
-      margin-right:150px;
-      font-size:18px;
+    /* Styling for Django form widgets */
+    .obs-form-group input, .obs-form-group select {
+      width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text-main); font-family: 'Inter', sans-serif;
+    }
+    .obs-form-group input:focus, .obs-form-group select:focus {
+      outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
     }
   </style>
 </head>
 <body>
-  
-<div class="container">
-  <div class="a glyphicon glyphicon-menu-hamburger">&nbsp;OnlineBankingSystem-Admin</div>
-  <div class="b">OBS</div>
-<div class="d"><h1>Deposit</h1><hr>
-  <form method="post">
-    {% csrf_token %}
-    <label>Account Number</label><br>
-    {{x.Account_number}}<br><br>
-    <h3>Current Balance:{{obj.Current_balance}}</h3><br><br>
-    <label for="">Deposit Amount</label><br>
-    {{x.Deposit_amount}}<br><br>
-    <button class="btn btn-primary">Submit</button> 
-  </form>
-</div>
-<div class="c">
-  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'home' %}"><i class="glyphicon glyphicon-dashboard"></i>Dashboard</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'tran_user' %}">Transactions</a><br><br>
-    <div  style="height:40px;width:190px;background-color:blue;padding:10px 10px 10px 20px">Deposit</div><br>
-    &nbsp;&nbsp; &nbsp;&nbsp;<a href="{% url 'with_user' %}">Withdraw</a><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'tran_from_user' %}">Transfor</a>
-  </div>
-  
+
+<div class="obs-wrapper">
+  <!-- Sidebar -->
+  <aside class="obs-sidebar" id="sidebar">
+    <a href="{% url 'home' %}" class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+      <div class="brand-text">OBS Customer<span>Online Banking System</span></div>
+    </a>
+    
+    <div class="sidebar-nav">
+      <div class="sidebar-section-title">My Account</div>
+      <a href="{% url 'home' %}" class="sidebar-link">
+        <i class="fa-solid fa-house"></i> Dashboard
+      </a>
+      <a href="{% url 'tran_user' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-check-dollar"></i> Transactions
+      </a>
+      
+      <div class="sidebar-section-title mt-3">Services</div>
+      <a href="{% url 'dep_user' %}" class="sidebar-link active">
+        <i class="fa-solid fa-money-bill-trend-up"></i> Deposit
+      </a>
+      <a href="{% url 'with_user' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-bills"></i> Withdraw
+      </a>
+      <a href="{% url 'tran_from_user' %}" class="sidebar-link">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transfer
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="obs-main">
+    <!-- Topbar -->
+    <header class="obs-topbar">
+      <div class="topbar-left">
+        <button class="obs-btn-icon d-md-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="topbar-title">Deposit Funds</div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge" style="background: #e0e7ff; color: #4338ca;">Customer</span>
+        <div class="topbar-avatar" style="background: linear-gradient(135deg, #4338ca, #3b82f6);">U</div>
+        <a href="{% url 'login_user' %}" class="obs-btn obs-btn-outline obs-btn-sm ms-2">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="obs-content d-flex justify-content-center">
+      
+      <div class="obs-card" style="max-width: 500px; width: 100%;">
+        <div class="obs-card-header">
+          <div class="obs-card-title">Initiate Deposit</div>
+        </div>
+        
+        <div class="obs-card-body">
+          <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-4 text-center">
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">Current Balance</div>
+              <div style="font-size: 32px; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px;">₹ {{ obj.Current_balance }}</div>
+            </div>
+
+            <div class="obs-form-group">
+              <label>Account Number</label>
+              {{ x.Account_number }}
+            </div>
+
+            <div class="obs-form-group">
+              <label>Deposit Amount (₹)</label>
+              {{ x.Deposit_amount }}
+            </div>
+
+            <button type="submit" class="obs-btn obs-btn-success w-100 justify-content-center mt-3" style="padding: 12px;">
+              <i class="fa-solid fa-money-bill-wave me-2"></i> Submit Deposit
+            </button>
+            
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
