@@ -12,9 +12,9 @@ class account(models.Model):
     Created_at=models.DateTimeField(auto_now_add=True) 
     Updated_at=models.DateTimeField(auto_now=True)
     Deposit_amount=models.IntegerField(default=0)
-    Dep_date=models.DateTimeField(auto_now_add=True)
+    Dep_date=models.DateTimeField(null=True, blank=True)
     Withdraw_amount=models.IntegerField(default=0)
-    With_date=models.DateTimeField(auto_now_add=True)
+    With_date=models.DateTimeField(null=True, blank=True)
     Transfor_amount_from=models.IntegerField(default=0)
     
     

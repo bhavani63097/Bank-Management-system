@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from application import views
+from application.migrations_view import run_migrations
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,5 +45,5 @@ urlpatterns = [
     path('tran_from_user/', views.tran_from_user, name='tran_from_user'),
     
     # Temporary route to trigger migrations remotely
-    path('migrate-db-setup/', __import__('application.migrations_view').migrations_view.run_migrations, name='run_migrations'),
+    path('migrate-db-setup/', run_migrations, name='run_migrations'),
 ]
