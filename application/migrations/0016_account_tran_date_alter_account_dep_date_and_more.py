@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='account',
             name='Tran_date',
-            field=models.DateTimeField(auto_now_add=True, default=0),
+            field=models.DateTimeField(auto_now_add=True, default='2025-01-01T00:00:00Z'),
             preserve_default=False,
         ),
         migrations.AlterField(
