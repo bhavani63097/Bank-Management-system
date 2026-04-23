@@ -11,7 +11,7 @@ function handleLogin(event) {
     return false;
   }
 
-  if (username !== 'Vijay kumar' || password !== '9741334784') {
+  if (username !== 'admin' || password !== 'admin123') {
     errorText.textContent = 'Invalid username or password.';
     errorDiv.classList.remove('d-none');
     return false;
